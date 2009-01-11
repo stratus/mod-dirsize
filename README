@@ -1,26 +1,24 @@
 
-                                      mod_dirsize 0.1
-                                   ---------------------
+                                      mod-dirsize
+                                   -----------------
 
 Introduction
 ------------
 
-It's an apache module in early stages of development that helps you 
-calculating the disk space used for each VirtualHost, based of course
-on its DocumentRoot. The result is in kb and XML.
+mod-dirsize is a module for Apache 1.x to calculate the disk space used by each 
+VirtualHost based on its DocumentRoot. The result is given in kb encapsulated 
+in a valid XML file.
 
 
 Roadmap
 -------
 
-March/April
 mod_dirsize 0.2 - Apache 2 support
                   Better debug output
 		  W3C HTML and XML if possible
 
-May/June
 mod_dirsize 0.3 - Remove ap_bspawn() call adding better code to 
-                  calculate the space used.
+                  calculate the space used (a "libdu" would be awesome).
 
 
 Configuration
@@ -28,18 +26,18 @@ Configuration
 
 To include this module in your server, follow the steps below:
 
-    1. Install the module in /usr/lib/apache/1.3/ or your apache 
+    1. Install the module in /usr/lib/apache/1.3/ or your Apache 
        libraries directory (if you are unsure search for mod_env.so).
 
     2. Place the configuration line below into your /etc/apache/modules.conf 
-       (Debian) or together with Module or AddModule directives in your own
+       (Debian/Ubuntu) or together with Module or AddModule directives in your own
        Apache configuration file.
 
        For Apache 1.2: Module dirsize_module      <libraries_dir>/mod_dirsize.so
        For Apache 1.3: LoadModule dirsize_module  <libraries_dir>/mod_dirsize.so
       
     3. Reload your Apache (/etc/init.d/apache reload), check if it was really
-       reloaded (look at your global log files).
+       reloaded (ie.: look at your global log files).
 
     4. Add in your Apache configuration file, outside any <VirtualHost> directive:
        
@@ -49,16 +47,16 @@ To include this module in your server, follow the steps below:
 
     5. Reload your Apache again doing the same sanity checks.
        
-    6. Go to your web browser and check http://hostname/dirsize . You can do
-       http://anyvirtualhost/dirsize too!
+    6. Go to your web browser and check http://hostname/dirsize . You may want to 
+       do http://anyvirtualhost/dirsize as well.
 
 
 Security
 --------
     
-The <Location> directive above do not set any authentication for that 
-url. You can restrict the access in many ways, the simplest is a ip 
-based authentication:
+The <Location> directive above does NOT set any authentication for that 
+URL. You may restrict the access by yourself! I recommend something like IP 
+based authentication as follows:
 
 <Location /dirsize>
    SetHandler mod_dirsize
@@ -67,14 +65,14 @@ based authentication:
    allow from <paste your ip here>
 </Location>   
     
-You must change <paste your ip here> for anything valid, of course.
+Please note you must change <paste your ip here>.
 
 
 Notes
 -----
 
 You are free to change <Location /dirsize> for <Location /anything> if 
-you want, but the "SetHandler mod_dirsize" must be untouched.
+you want, but the "SetHandler mod_dirsize" must be untouched otherwise it won't work.
 
 
 Thanks
